@@ -1,4 +1,4 @@
-package com.example.redisdemo.test;
+package com.redis.demo.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
