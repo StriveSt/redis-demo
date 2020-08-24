@@ -1,5 +1,7 @@
 package com.redis.demo.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class DemoController {
 
-    @Resource
+    @Qualifier("newRedisTemplate")
+    @Autowired
     private RedisTemplate<String, String> template;
 
     private static final String pre = "key";
