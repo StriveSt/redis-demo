@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shentan
@@ -25,8 +25,49 @@ public class ListDemoTest {
     @Resource(name = "newRedisTemplate")
     private ListOperations<String, String> list;
 
+    private static final String key = "list";
+
     @Test
     public void push() {
+        Long size = list.size(key);
+        System.out.println(size);
+        Long x = list.leftPush(key, "x");
+        System.out.println(x);
+    }
+
+    @Test
+    public void pushAll() {
+        Long x = list.leftPushAll(key, "x", "y", "z");
+        System.out.println(x);
+        Long size = list.size(key);
+        System.out.println(size);
+    }
+
+    @Test
+    public void leftPop() {
+        String s = list.leftPop(key);
+        System.out.println(s);
+        Long size = list.size(key);
+        System.out.println(size);
+    }
+
+    @Test
+    public void rightPush() {
+        Long aLong = list.rightPush(key, "1");
+        System.out.println(aLong);
+        Long size = list.size(key);
+        System.out.println(size);
+    }
+
+    @Test
+    public void del() {
+        list.getOperations().delete(key);
+    }
+
+    @Test
+    public void blockPop() {
+        String s = list.leftPop(key, 0, TimeUnit.SECONDS);
+        System.out.println(s);
     }
 
 }
